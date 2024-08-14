@@ -1,72 +1,64 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout') {
-            steps {
-                // Clones the GitHub repository to the Jenkins workspace
-                git branch: 'main', url: 'https://github.com/YourUsername/YourRepository.git'
-            }
-        }
-
         stage('Build') {
             steps {
-                echo 'Building the project...'
-                // Add your build commands here, e.g., compiling code
+                echo 'Building the project using Maven...'
+                // Add your actual build commands here
             }
         }
-
-        stage('Unit Tests') {
+        stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests...'
-                // Add your testing commands here
+                echo 'Running unit tests using JUnit...'
+                // Add your actual test commands here
             }
         }
-
         stage('Code Analysis') {
             steps {
-                echo 'Analyzing code with SonarQube...'
-                // Add your code analysis commands here
+                echo 'Analyzing code using SonarQube...'
+                // Add your actual code analysis commands here
             }
         }
-
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan...'
-                // Add your security scan commands here
+                echo 'Performing security scan using OWASP Dependency-Check...'
+                // Add your actual security scan commands here
             }
         }
-
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying to staging...'
-                // Add your staging deployment commands here
+                echo 'Deploying to staging environment on AWS EC2...'
+                // Add your actual deployment commands here
             }
         }
-
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging using Selenium...'
+                // Add your actual integration test commands here
+            }
+        }
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production...'
-                // Add your production deployment commands here
+                echo 'Deploying to production environment on AWS EC2...'
+                // Add your actual production deployment commands here
             }
         }
     }
-
     post {
         always {
             emailext(
-                subject: "Jenkins Build - ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
+                subject: "Jenkins Pipeline Notification - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                     Hi Team,
 
-                    The Jenkins build for the job '${env.JOB_NAME}' (build #${env.BUILD_NUMBER}) has completed with status: ${currentBuild.currentResult}.
+                    The Jenkins pipeline for the job '${env.JOB_NAME}' build #${env.BUILD_NUMBER} has completed with the following status: ${currentBuild.currentResult}.
 
-                    Check the details here: ${env.BUILD_URL}
+                    You can check the build details here: ${env.BUILD_URL}
 
                     Best regards,
                     Jenkins
                 """,
-                to: 'manalgupta01012005@gmail.com',
+                to: "manalgupta01012005@gmail.com",
                 attachLog: true
             )
         }
