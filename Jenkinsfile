@@ -3,44 +3,37 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Add build tool command here (e.g., Maven)
+                echo 'Building the project using Maven...'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running Unit and Integration Tests...'
-                // Add testing commands here
+                echo 'Running unit tests using JUnit...'
             }
         }
         stage('Code Analysis') {
             steps {
-                echo 'Analyzing Code...'
-                // Add code analysis tool here
+                echo 'Analyzing code using SonarQube...'
             }
         }
         stage('Security Scan') {
             steps {
-                echo 'Performing Security Scan...'
-                // Add security scan tool here
+                echo 'Performing security scan using OWASP Dependency-Check...'
             }
         }
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying to Staging...'
-                // Add staging deployment commands here
+                echo 'Deploying to staging environment on AWS EC2...'
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running Integration Tests on Staging...'
-                // Add integration tests commands here
+                echo 'Running integration tests on staging using Selenium...'
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to Production...'
-                // Add production deployment commands here
+                echo 'Deploying to production environment on AWS EC2...'
             }
         }
     }
