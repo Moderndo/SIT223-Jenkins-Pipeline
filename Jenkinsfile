@@ -9,6 +9,7 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit tests using JUnit...'
+                // Add your actual test commands here
             }
         }
         stage('Code Analysis') {
@@ -35,6 +36,19 @@ pipeline {
             steps {
                 echo 'Deploying to production environment on AWS EC2...'
             }
+        }
+    }
+    post {
+        always {
+            // Send an aggregated test report via email using Test Results Aggregator
+            emailext(
+                subject: "Pipeline Notification - Build ${currentBuild.fullDisplayName}",
+                body: """The pipeline for ${env.JOB_NAME} build ${currentBuild.fullDisplayName} has completed with the following status: ${currentBuild.currentResult}.
+
+                Please find the attached test results.""",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+                attachmentsPattern: '**/target/surefire-reports/*.xml'
+            )
         }
     }
 }
