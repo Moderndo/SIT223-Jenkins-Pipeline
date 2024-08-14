@@ -37,23 +37,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            emailext(
-                subject: "Jenkins Pipeline Notification - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                    Hi Team,
-
-                    The Jenkins pipeline for the job '${env.JOB_NAME}' build #${env.BUILD_NUMBER} has completed with the following status: ${currentBuild.currentResult}.
-
-                    You can check the build details here: ${env.BUILD_URL}
-
-                    Best regards,
-                    Jenkins
-                """,
-                to: "manalgupta01012005@gmail.com",
-                attachLog: true
-            )
-        }
-    }
 }
